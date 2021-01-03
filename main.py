@@ -1,19 +1,14 @@
 import pygame
 
-flag = False
-wh = input().split(' ')
-w = wh[0]
-h = wh[1]
-if not w.isdigit() or not h.isdigit():
-    print('Неправильный формат ввода')
-    flag = True
-
+pygame.init()
+size = 1000, 700
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption('Feel the beat')
 
 if __name__ == '__main__':
-    if not flag:
-        pygame.init()
-        size = width, height = int(w), int(h)
-        screen = pygame.display.set_mode(size)
+    pygame.mouse.set_visible(False)
+    running = True
+    while running:
         screen.fill((0, 0, 0))
         pygame.display.flip()
         while pygame.event.wait().type != pygame.QUIT:
