@@ -25,8 +25,26 @@ def load_image(name, colorkey=None):
     return image
 
 
+def load_sound(name):
+    if not pygame.mixer or not pygame.mixer.get_init():
+        pass
+    try:
+        sound = pygame.mixer.Sound(name)
+    except pygame.error:
+        print(f'Файл со звуком "{sound}" не найден')
+    return sound
+
+
+class Menu(object):
+    pass
+
+
+class Game(object):
+    load_sound('JBR')
+
+
 if __name__ == '__main__':
-    screen.fill((0, 0, 0))
+    screen.fill((255, 255, 255))
     all_sprites = pygame.sprite.Group()
 
     my_cursor_image = load_image('arrow.png')
