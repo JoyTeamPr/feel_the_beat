@@ -47,12 +47,12 @@ class Menu:
 
 
 class Tile:
-    pygame.draw.rect(screen, (0, 0, 0), (50, 50, 100, 160), width=1)
+    def draw(self):
+        pygame.draw.rect(screen, (1, 1, 1), (50, 50, 100, 160), 0)
 
 
 if __name__ == '__main__':
-    pygame.draw.rect(screen, (0, 0, 0), (50, 50, 100, 160), width=1)
-    Tile()
+    Tile.draw('g')
     all_sprites = pygame.sprite.Group()
     my_cursor_image = load_image('arrow.png')
     my_cursor = pygame.sprite.Sprite(all_sprites)
@@ -60,7 +60,6 @@ if __name__ == '__main__':
     my_cursor.rect = my_cursor.image.get_rect()
     pygame.mouse.set_visible(False)
     running = True
-    Tile()
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -68,10 +67,7 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEMOTION:
                 my_cursor.rect.topleft = event.pos
         screen.fill((255, 255, 255))
-        Tile()
         if pygame.mouse.get_focused():
             all_sprites.draw(screen)
         pygame.display.flip()
-    Tile()
     pygame.quit()
-Tile()
