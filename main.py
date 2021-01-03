@@ -49,10 +49,10 @@ class Menu:
 class Tile:
     def draw(self):
         pygame.draw.rect(screen, (1, 1, 1), (50, 50, 100, 160), 0)
+    draw('')
 
 
 if __name__ == '__main__':
-    Tile.draw('g')
     all_sprites = pygame.sprite.Group()
     my_cursor_image = load_image('arrow.png')
     my_cursor = pygame.sprite.Sprite(all_sprites)
