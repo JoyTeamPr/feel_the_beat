@@ -40,27 +40,30 @@ class Menu(object):
 
 
 class Game(object):
-    load_sound('JBR')
+    def play_jbr(name):
+        if name == 'JBR':
+            song_jbr = load_sound('JBR.mp3')
+            song_jbr.play()
+            song_jbr.set_volume(0.3)
 
 
 if __name__ == '__main__':
     screen.fill((255, 255, 255))
     all_sprites = pygame.sprite.Group()
-
     my_cursor_image = load_image('arrow.png')
     my_cursor = pygame.sprite.Sprite(all_sprites)
     my_cursor.image = my_cursor_image
     my_cursor.rect = my_cursor.image.get_rect()
-
     pygame.mouse.set_visible(False)
     running = True
+    Game.play_jbr('JBR')
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEMOTION:
                 my_cursor.rect.topleft = event.pos
-        screen.fill((0, 0, 0))
+        screen.fill((255, 255, 255))
         if pygame.mouse.get_focused():
             all_sprites.draw(screen)
         pygame.display.flip()
