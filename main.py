@@ -55,7 +55,6 @@ class Tile:
             if pos_mouse[1] in range(50, 160):
                 pygame.draw.rect(screen, (44, 49, 54), (50, 50, 100, 160), 0)
                 flag = True
-        global flag
 
 
 if __name__ == '__main__':
