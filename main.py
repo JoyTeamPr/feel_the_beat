@@ -25,15 +25,39 @@ def load_image(name, colorkey=None):
     return image
 
 
-if __name__ == '__main__':
-    screen.fill((0, 0, 0))
-    all_sprites = pygame.sprite.Group()
+def load_sound(name):
+    if not pygame.mixer or not pygame.mixer.get_init():
+        pass
+    try:
+        sound = pygame.mixer.Sound(name)
+    except pygame.error:
+        print(f'Файл со звуком "{sound}" не найден')
+    return sound
 
+
+class Game:
+    def play_jbr(name):
+        song_jbr = load_sound('JBR.mp3')
+        song_jbr.play()
+        song_jbr.set_volume(0.3)
+
+
+class Menu:
+    Game.play_jbr('JBR')
+
+
+class Tile:
+    def draw(self):
+        pygame.draw.rect(screen, (1, 1, 1), (50, 50, 100, 160), 0)
+    draw('')
+
+
+if __name__ == '__main__':
+    all_sprites = pygame.sprite.Group()
     my_cursor_image = load_image('arrow.png')
     my_cursor = pygame.sprite.Sprite(all_sprites)
     my_cursor.image = my_cursor_image
     my_cursor.rect = my_cursor.image.get_rect()
-
     pygame.mouse.set_visible(False)
     running = True
     while running:
@@ -42,9 +66,8 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.MOUSEMOTION:
                 my_cursor.rect.topleft = event.pos
-        screen.fill((0, 0, 0))
+        screen.fill((255, 255, 255))
         if pygame.mouse.get_focused():
             all_sprites.draw(screen)
         pygame.display.flip()
-
     pygame.quit()
