@@ -49,7 +49,13 @@ class Menu:
 class Tile:
     def draw(self):
         pygame.draw.rect(screen, (1, 1, 1), (50, 50, 100, 160), 0)
-    draw('')
+
+    def clicked(self):
+        if pos_mouse[0] in range(50, 100):
+            if pos_mouse[1] in range(50, 160):
+                pygame.draw.rect(screen, (44, 49, 54), (50, 50, 100, 160), 0)
+                flag = True
+        global flag
 
 
 if __name__ == '__main__':
@@ -66,7 +72,13 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.MOUSEMOTION:
                 my_cursor.rect.topleft = event.pos
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos_mouse = pygame.mouse.get_pos()
+                print(pos_mouse)
         screen.fill((255, 255, 255))
+        Tile.draw('self')
+        if flag:
+            Tile.clicked('self')
         if pygame.mouse.get_focused():
             all_sprites.draw(screen)
         pygame.display.flip()
