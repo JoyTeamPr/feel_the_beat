@@ -3,6 +3,7 @@ import random
 import os
 import sys
 
+pygame.font.init()
 pygame.init()
 size = 1000, 700
 screen = pygame.display.set_mode(size)
@@ -13,8 +14,7 @@ pygame.display.set_icon(pygame.image.load('data/note.png'))
 def msg(screen, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
     if pos[0] == -1:
         pos = (screen.get_rect().centerx, pos[1])
-    if pos[1] == -1:
-        pos = (pos[0], screen.get_rect().centery)
+    if pos[1] == -1: pos = (pos[0], screen.get_rect().centery)
     font = pygame.font.Font(None, size)
     text = font.render(text, 1, color)
     textpos = text.get_rect()
@@ -118,8 +118,7 @@ if __name__ == '__main__':
         for i in map:
             sb.append(Tile())
             sb[-1].pos(i)
-            if lost != 0:
-                break
+            if lost != 0: break
             for j in range(700 // (5 * speed)):
                 time += 1 / delt
                 clock.tick(delt)
@@ -136,22 +135,21 @@ if __name__ == '__main__':
                         pass
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT or \
-                            (event.type == pygame.KEYDOWN and event.key
-                             == pygame.K_ESCAPE):
+                            (
+                                    event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                         pygame.quit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         lost = sb[score].click(pygame.mouse.get_pos())
                         if lost != 0:
                             Game.lose('', '')
                         score += 1
-                msg(screen, "SCORE" + str(score), color=(0, 128, 255),
+                msg(screen, "СЧЁТ " + str(score), color=(0, 128, 255),
                     pos=(-1, 30))
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, "YOU LOSE", color=(110, 128, 225), size=100, pos=(-1, -1))
+    msg(screen, "ВЫ ПРОИГРАЛИ ", color=(110, 128, 225), size=100, pos=(-1, -1))
     pygame.display.update()
-    pygame.time.wait(2000)
     running = True
     while running:
         for event in pygame.event.get():
@@ -161,7 +159,5 @@ if __name__ == '__main__':
                 my_cursor.rect.topleft = event.pos
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print('okay')
-        if pygame.mouse.get_focused():
-            all_sprites.draw(screen)
         pygame.display.flip()
     pygame.quit()
