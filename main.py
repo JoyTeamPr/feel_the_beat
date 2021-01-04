@@ -7,6 +7,7 @@ pygame.init()
 size = 1000, 700
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Feel the beat')
+pygame.display.set_icon(pygame.image.load('data/note.png'))
 
 
 def msg(screen, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
