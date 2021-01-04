@@ -3,6 +3,7 @@ import random
 import os
 import sys
 
+running = True
 pygame.font.init()
 pygame.init()
 size = 1000, 700
@@ -12,16 +13,17 @@ pygame.display.set_icon(pygame.image.load('data/note.png'))
 
 
 def msg(sc, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
-    if pos[0] == -1:
-        pos = (sc.get_rect().centerx, pos[1])
-    if pos[1] == -1:
-        pos = (pos[0], sc.get_rect().centery)
-    font = pygame.font.Font(None, size)
-    text = font.render(text, 1, color)
-    textpos = text.get_rect()
-    textpos.centerx = pos[0]
-    textpos.centery = pos[1]
-    sc.blit(text, textpos)
+    if running:
+        if pos[0] == -1:
+            pos = (sc.get_rect().centerx, pos[1])
+        if pos[1] == -1:
+            pos = (pos[0], sc.get_rect().centery)
+        font = pygame.font.Font(None, size)
+        text = font.render(text, 1, color)
+        textpos = text.get_rect()
+        textpos.centerx = pos[0]
+        textpos.centery = pos[1]
+        sc.blit(text, textpos)
 
 
 def load_image(name, colorkey=None):
@@ -108,7 +110,7 @@ if __name__ == '__main__':
     pygame.mouse.set_visible(True)
     clock = pygame.time.Clock()
     maps = [0, 1, 2, 1, 1, 2, 3, 3, 2, 1, 2, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
-            1, 2, 3, 0, 1, 2, 3]
+            1, 2, 3, 0, 1, 2, 3, 0, 3, 2, 1, 0, 2, 1, 2, 3, 0, 0, 3, 1, 0]
     lost = 0
     time = 0
     delta = 60
@@ -122,6 +124,9 @@ if __name__ == '__main__':
             if lost != 0:
                 break
             for j in range(700 // (5 * speed)):
+                if pygame.mouse.get_focused():
+                    all_sprites.draw(sc)
+                    pygame.display.flip()
                 time += 1 / delta
                 clock.tick(delta)
                 sc.fill((224, 224, 255))
@@ -139,6 +144,7 @@ if __name__ == '__main__':
                     if event.type == pygame.QUIT or \
                             (event.type == pygame.KEYDOWN and event.key ==
                              pygame.K_ESCAPE):
+                        running = False
                         pygame.quit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         lost = sb[score].click(pygame.mouse.get_pos())
