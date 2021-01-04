@@ -3,25 +3,27 @@ import random
 import os
 import sys
 
+running = True
 pygame.font.init()
 pygame.init()
 size = 1000, 700
-screen = pygame.display.set_mode(size)
+sc = pygame.display.set_mode(size)
 pygame.display.set_caption('Feel the beat')
 pygame.display.set_icon(pygame.image.load('data/note.png'))
 
 
-def msg(screen, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
-    if pos[0] == -1:
-        pos = (screen.get_rect().centerx, pos[1])
-    if pos[1] == -1:
-        pos = (pos[0], screen.get_rect().centery)
-    font = pygame.font.Font(None, size)
-    text = font.render(text, 1, color)
-    textpos = text.get_rect()
-    textpos.centerx = pos[0]
-    textpos.centery = pos[1]
-    screen.blit(text, textpos)
+def msg(sc, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
+    if running:
+        if pos[0] == -1:
+            pos = (sc.get_rect().centerx, pos[1])
+        if pos[1] == -1:
+            pos = (pos[0], sc.get_rect().centery)
+        font = pygame.font.Font(None, size)
+        text = font.render(text, 1, color)
+        textpos = text.get_rect()
+        textpos.centerx = pos[0]
+        textpos.centery = pos[1]
+        sc.blit(text, textpos)
 
 
 def load_image(name, colorkey=None):
@@ -83,12 +85,12 @@ class Tile:
     def pos(self, name):
         self.x = name * 1000 // 4
 
-    def update(self, screen):
+    def update(self, sc):
         if self.flag:
-            pygame.draw.rect(screen, (0, 0, 0),
+            pygame.draw.rect(sc, (0, 0, 0),
                              [self.x, self.y, self.h, self.l])
         else:
-            pygame.draw.rect(screen, (180, 180, 180),
+            pygame.draw.rect(sc, (180, 180, 180),
                              [self.x, self.y, self.h, self.l])
 
     def click(self, position):
@@ -107,50 +109,56 @@ if __name__ == '__main__':
     my_cursor.rect = my_cursor.image.get_rect()
     pygame.mouse.set_visible(True)
     clock = pygame.time.Clock()
-    map_ = [0, 1, 2, 1, 1, 2, 3, 3, 2, 1, 2, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
-            1, 2, 3, 0, 1, 2, 3]
+    maps = [0, 1, 2, 1, 1, 2, 3, 3, 2, 1, 2, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
+            1, 2, 3, 0, 1, 2, 3, 0, 3, 2, 1, 0, 2, 1, 2, 3, 0, 0, 3, 1, 0]
     lost = 0
     time = 0
-    delt = 60
+    delta = 60
     sb = []
     speed = 5
     score = 0
     while lost == 0:
-        for i in map_:
+        for i in maps:
             sb.append(Tile())
             sb[-1].pos(i)
             if lost != 0:
                 break
             for j in range(700 // (5 * speed)):
-                time += 1 / delt
-                clock.tick(delt)
-                screen.fill((224, 224, 255))
+                if pygame.mouse.get_focused():
+                    all_sprites.draw(sc)
+                    pygame.display.flip()
+                time += 1 / delta
+                clock.tick(delta)
+                sc.fill((224, 224, 255))
                 if lost != 0:
                     break
                 for k in range(len(sb)):
                     try:
                         sb[k].y += speed
-                        sb[k].update(screen)
+                        sb[k].update(sc)
                         if sb[k].y > 700 - sb[k].l and sb[k].flag:
                             lost = 1
-                    except:
+                    finally:
                         pass
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT or \
-                            (event.type == pygame.KEYDOWN and event.key
-                             == pygame.K_ESCAPE):
+                            (event.type == pygame.KEYDOWN and event.key ==
+                             pygame.K_ESCAPE):
+                        running = False
                         pygame.quit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         lost = sb[score].click(pygame.mouse.get_pos())
                         if lost != 0:
                             Game.lose('', '')
                         score += 1
-                msg(screen, "СЧЁТ " + str(score), color=(0, 128, 255),
+                msg(sc, "СЧЁТ " + str(score), color=(0, 128, 255),
                     pos=(-1, 30))
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, "ВЫ ПРОИГРАЛИ ", color=(110, 128, 225), size=100, pos=(-1, -1))
+    msg(sc, f"ВЫ ПРОИГРАЛИ. Ваш счет: {score}", color=(110, 128, 225),
+        size=70, pos=(-1, -1))
+    pygame.display.update()
     running = True
     while running:
         for event in pygame.event.get():
@@ -158,5 +166,7 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.MOUSEMOTION:
                 my_cursor.rect.topleft = event.pos
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print('okay')
         pygame.display.flip()
     pygame.quit()
