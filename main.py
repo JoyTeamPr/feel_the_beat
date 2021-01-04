@@ -88,7 +88,7 @@ if __name__ == '__main__':
     my_cursor = pygame.sprite.Sprite(all_sprites)
     my_cursor.image = my_cursor_image
     my_cursor.rect = my_cursor.image.get_rect()
-    pygame.mouse.set_visible(False)
+    pygame.mouse.set_visible(True)
     clock = pygame.time.Clock()
     map = [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
            1, 2,
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     time = 0
     delt = 60
     sb = []
-    speed = 4
+    speed = 5
     score = 0
     while lost == 0:
         for i in map:
