@@ -62,9 +62,9 @@ class Game:
 
     def lose(self, name):
         pygame.mixer.stop()
-        loosing1 = load_sound('Проигрыш (1).mp3')
-        loosing2 = load_sound('Проигрыш (2).mp3')
-        loosing3 = load_sound('Проигрыш (3).mp3')
+        loosing1 = load_sound('data/Проигрыш (1).mp3')
+        loosing2 = load_sound('data/Проигрыш (2).mp3')
+        loosing3 = load_sound('data/Проигрыш (3).mp3')
         loosing = [loosing1, loosing2, loosing3]
         random.choice(loosing).play()
 
