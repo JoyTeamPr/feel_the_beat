@@ -77,7 +77,7 @@ class Tile:
     x = 0
     y = -700 // 5
     h = 1000 // 4 - 1
-    l = 700 // 5
+    len_ = 700 // 5
     flag = True
 
     def pos(self, name):
@@ -86,14 +86,14 @@ class Tile:
     def update(self, screen):
         if self.flag:
             pygame.draw.rect(screen, (0, 0, 0),
-                             [self.x, self.y, self.h, self.l])
+                             [self.x, self.y, self.h, self.len_])
         else:
             pygame.draw.rect(screen, (180, 180, 180),
-                             [self.x, self.y, self.h, self.l])
+                             [self.x, self.y, self.h, self.len_])
 
     def click(self, position):
         if position[0] in range(self.x, self.h + self.x):
-            if position[1] in range(self.y, self.l + self.y):
+            if position[1] in range(self.y, self.len_ + self.y):
                 self.flag = False
                 return 0
         return 1
@@ -111,7 +111,7 @@ if __name__ == '__main__':
             1, 2, 3, 0, 1, 2, 3]
     lost = 0
     time = 0
-    delt = 60
+    delta = 60
     sb = []
     speed = 5
     score = 0
@@ -122,8 +122,8 @@ if __name__ == '__main__':
             if lost != 0:
                 break
             for j in range(700 // (5 * speed)):
-                time += 1 / delt
-                clock.tick(delt)
+                time += 1 / delta
+                clock.tick(delta)
                 screen.fill((224, 224, 255))
                 if lost != 0:
                     break
@@ -131,7 +131,7 @@ if __name__ == '__main__':
                     try:
                         sb[k].y += speed
                         sb[k].update(screen)
-                        if sb[k].y > 700 - sb[k].l and sb[k].flag:
+                        if sb[k].y > 700 - sb[k].len_ and sb[k].flag:
                             lost = 1
                     except:
                         pass
