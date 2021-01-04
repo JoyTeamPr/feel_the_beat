@@ -133,12 +133,12 @@ if __name__ == '__main__':
                         sb[k].update(screen)
                         if sb[k].y > 700 - sb[k].l and sb[k].flag:
                             lost = 1
-                    except:
+                    finally:
                         pass
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT or \
-                            (
-                                    event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                            (event.type == pygame.KEYDOWN and event.key ==
+                             pygame.K_ESCAPE):
                         pygame.quit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         lost = sb[score].click(pygame.mouse.get_pos())
@@ -150,7 +150,8 @@ if __name__ == '__main__':
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, f"ВЫ ПРОИГРАЛИ. Ваш счет: {score}", color=(110, 128, 225), size=70, pos=(-1, -1))
+    msg(screen, f"ВЫ ПРОИГРАЛИ. Ваш счет: {score}", color=(110, 128, 225),
+        size=70, pos=(-1, -1))
     pygame.display.update()
     running = True
     while running:
