@@ -150,7 +150,7 @@ if __name__ == '__main__':
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, "ВЫ ПРОИГРАЛИ ", color=(110, 128, 225), size=100, pos=(-1, -1))
+    msg(screen, f"ВЫ ПРОИГРАЛИ. Ваш счет: {score}", color=(110, 128, 225), size=70, pos=(-1, -1))
     pygame.display.update()
     running = True
     while running:
