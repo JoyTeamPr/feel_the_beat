@@ -107,8 +107,8 @@ if __name__ == '__main__':
     my_cursor.rect = my_cursor.image.get_rect()
     pygame.mouse.set_visible(True)
     clock = pygame.time.Clock()
-    map = [0, 1, 2, 1, 1, 2, 3, 3, 2, 1, 2, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
-           1, 2, 3, 0, 1, 2, 3]
+    map_ = [0, 1, 2, 1, 1, 2, 3, 3, 2, 1, 2, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
+            1, 2, 3, 0, 1, 2, 3]
     lost = 0
     time = 0
     delt = 60
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     speed = 5
     score = 0
     while lost == 0:
-        for i in map:
+        for i in map_:
             sb.append(Tile())
             sb[-1].pos(i)
             if lost != 0:
@@ -137,8 +137,8 @@ if __name__ == '__main__':
                         pass
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT or \
-                            (
-                                    event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                            (event.type == pygame.KEYDOWN and event.key
+                             == pygame.K_ESCAPE):
                         pygame.quit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         lost = sb[score].click(pygame.mouse.get_pos())
@@ -151,7 +151,6 @@ if __name__ == '__main__':
         speed += 1
     pygame.mixer.music.stop()
     msg(screen, "ВЫ ПРОИГРАЛИ ", color=(110, 128, 225), size=100, pos=(-1, -1))
-    pygame.display.update()
     running = True
     while running:
         for event in pygame.event.get():
@@ -159,7 +158,5 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.MOUSEMOTION:
                 my_cursor.rect.topleft = event.pos
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                print('okay')
         pygame.display.flip()
     pygame.quit()
