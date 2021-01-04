@@ -16,7 +16,7 @@ def msg(screen, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
         pos = (screen.get_rect().centerx, pos[1])
     if pos[1] == -1:
         pos = (pos[0], screen.get_rect().centery)
-    font = pygame.font.Font(None, size)
+    font = pygame.font.Font('data/19846.otf', size)
     text = font.render(text, 1, color)
     textpos = text.get_rect()
     textpos.centerx = pos[0]
@@ -150,7 +150,7 @@ if __name__ == '__main__':
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, f"ВЫ ПРОИГРАЛИ. Ваш счёт: {score}", color=(110, 128, 225), size=70, pos=(-1, -1))
+    msg(screen, f"ВЫ ПРОИГРАЛИ. ВАШ СЧЁТ: {score}", color=(110, 128, 225), size=70, pos=(-1, -1))
     running = True
     while running:
         for event in pygame.event.get():
