@@ -1,4 +1,5 @@
 import pygame
+import random
 import os
 import sys
 
@@ -46,11 +47,21 @@ def load_sound(name):
 
 
 class Game:
+    def __init__(self):
+        super().__init__()
+        self.loosing = []
+
     def play_jbr(name):
         song_jbr = load_sound('JBR.mp3')
         song_jbr.play()
         song_jbr.set_volume(0.3)
 
+    def lose(self, name):
+        loosing1 = load_sound('Проигрыш (1).mp3')
+        loosing2 = load_sound('Проигрыш (2).mp3')
+        loosing3 = load_sound('Проигрыш (3).mp3')
+        loosing = [loosing1, loosing2, loosing3]
+        random.choice(loosing).play()
 
 class Menu:
     Game.play_jbr('JBR')
@@ -90,7 +101,7 @@ if __name__ == '__main__':
     my_cursor.rect = my_cursor.image.get_rect()
     pygame.mouse.set_visible(True)
     clock = pygame.time.Clock()
-    map = [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
+    map = [0, 1, 2, 1, 1, 2, 3, 3, 2, 1, 2, 3, 3, 1, 2, 3, 1, 0, 2, 3, 1, 0,
            1, 2,
            3, 0, 1, 2, 3]
     lost = 0
@@ -124,10 +135,8 @@ if __name__ == '__main__':
                         pygame.quit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         lost = sb[score].click(pygame.mouse.get_pos())
-                        #if lost == 0:
-                         #   mutrue.play()
-                        #else:
-                        #    mufall.play()
+                        if lost != 0:
+                            Game.lose('', '')
                         score += 1
                 msg(screen, "SCORE " + str(score), color=(0, 128, 255),
                     pos=(-1, 30))
@@ -135,9 +144,6 @@ if __name__ == '__main__':
         speed += 1
     pygame.mixer.music.stop()
     msg(screen, "YOU LOSE ", color=(110, 128, 225), size=100, pos=(-1, -1))
-    msg(screen, "developed by elleuch med amin", color=(110, 108, 225),
-        pos=(-1, 700 // 2 + 40))
-    msg(screen, "pt12", color=(110, 118, 225), pos=(-1, 700 // 2 + 60))
     pygame.display.update()
     pygame.time.wait(4000)
     pygame.quit()
