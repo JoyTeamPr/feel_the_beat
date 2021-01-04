@@ -14,7 +14,8 @@ pygame.display.set_icon(pygame.image.load('data/note.png'))
 def msg(screen, text, color=(55, 55, 55), size=36, pos=(-1, -1)):
     if pos[0] == -1:
         pos = (screen.get_rect().centerx, pos[1])
-    if pos[1] == -1: pos = (pos[0], screen.get_rect().centery)
+    if pos[1] == -1:
+        pos = (pos[0], screen.get_rect().centery)
     font = pygame.font.Font(None, size)
     text = font.render(text, 1, color)
     textpos = text.get_rect()
@@ -72,7 +73,7 @@ class Menu:
     Game.play_jbr('JBR')
 
 
-class Tile():
+class Tile:
     x = 0
     y = -700 // 5
     h = 1000 // 4 - 1
@@ -118,7 +119,8 @@ if __name__ == '__main__':
         for i in map:
             sb.append(Tile())
             sb[-1].pos(i)
-            if lost != 0: break
+            if lost != 0:
+                break
             for j in range(700 // (5 * speed)):
                 time += 1 / delt
                 clock.tick(delt)
