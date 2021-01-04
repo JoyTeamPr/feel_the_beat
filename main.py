@@ -133,7 +133,7 @@ if __name__ == '__main__':
                         sb[k].update(screen)
                         if sb[k].y > 700 - sb[k].len_ and sb[k].flag:
                             lost = 1
-                    except:
+                    finally:
                         pass
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT or \
@@ -150,7 +150,7 @@ if __name__ == '__main__':
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, "ВЫ ПРОИГРАЛИ ", color=(110, 128, 225), size=100, pos=(-1, -1))
+    msg(screen, f"ВЫ ПРОИГРАЛИ. Ваш счёт: {score}", color=(110, 128, 225), size=70, pos=(-1, -1))
     running = True
     while running:
         for event in pygame.event.get():
