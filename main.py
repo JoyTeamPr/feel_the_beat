@@ -51,12 +51,13 @@ class Game:
         super().__init__()
         self.loosing = []
 
-    def play_jbr(name):
+    def play_jbr(self):
         song_jbr = load_sound('JBR.mp3')
         song_jbr.play()
         song_jbr.set_volume(0.3)
 
     def lose(self, name):
+        pygame.mixer.stop()
         loosing1 = load_sound('Проигрыш (1).mp3')
         loosing2 = load_sound('Проигрыш (2).mp3')
         loosing3 = load_sound('Проигрыш (3).mp3')
