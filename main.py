@@ -56,15 +56,15 @@ class Game:
         self.loosing = []
 
     def play_jbr(self):
-        song_jbr = load_sound('JBR.mp3')
+        song_jbr = load_sound('music/JBR.mp3')
         song_jbr.play()
         song_jbr.set_volume(0.3)
 
     def lose(self, name):
         pygame.mixer.stop()
-        loosing1 = load_sound('data/Проигрыш (1).mp3')
-        loosing2 = load_sound('data/Проигрыш (2).mp3')
-        loosing3 = load_sound('data/Проигрыш (3).mp3')
+        loosing1 = load_sound('music/Проигрыш (1).mp3')
+        loosing2 = load_sound('music/Проигрыш (2).mp3')
+        loosing3 = load_sound('music/Проигрыш (3).mp3')
         loosing = [loosing1, loosing2, loosing3]
         random.choice(loosing).play()
 
@@ -150,7 +150,8 @@ if __name__ == '__main__':
                 pygame.display.update()
         speed += 1
     pygame.mixer.music.stop()
-    msg(screen, f"ВЫ ПРОИГРАЛИ. ВАШ СЧЁТ: {score}", color=(110, 128, 225), size=70, pos=(-1, -1))
+    msg(screen, f"ВЫ ПРОИГРАЛИ. ВАШ СЧЁТ: {score - 1}", color=(110, 128, 225),
+        size=70, pos=(-1, -1))
     running = True
     while running:
         for event in pygame.event.get():
